@@ -8,3 +8,10 @@ JVM cannot be installed as it does not have any physical existence.
   It comes with JRE and JDK installation.
   It provides platform independence by converting the bytecode obtained from any machine into corresponding machine instructions,
     but it is created only when we execute the java program.
+
+JIT Compiler
+  It stands for Just In Time Compiler, it was introduced to improve the performance of Java Virtual machine.
+  As we know JVM converts the bytes code into machine instructions, 
+    JIT helps to improve this operation by converting similar byte codes into machine instruction at the same time.
+  Hence it reduces the overall execution time of program.
+  JIT is also a part of JVM.
