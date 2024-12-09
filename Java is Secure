@@ -1,0 +1,63 @@
+Why Java is Secure?
+Java is the most popular object-oriented programming language. It provides a variety of salient features that are preferred by the developers. It is the reason that a billion of devices runs on Java. In this section, we are going to discuss why Java is secure.
+
+Java is secure due to the following reasons:
+
+Java programs run inside a virtual machine which is known as a sandbox.
+Java does not support explicit pointer.
+Byte-code verifier checks the code fragments for illegal code that can violate access right to object.
+It provides java.security package implements explicit security.
+It provides library level safety.
+Run-time security check takes place when we load new code.
+Java provides some other features that make Java more secure.
+
+JVM
+Security API's
+Security Manager
+Auto Memory Management
+No Concept of Pointers
+Compile-time Checking
+Cryptographic Security
+Java Sandbox
+Exception Handling
+ClassLoader
+
+JVM:
+  JVM plays a vital role to provide security. It verifies the byte-code. 
+  The JVM provides guarantees that there is no unsafe operation going to execute. 
+  It also helps to diminish the possibilities of the programmers who suffer from memory safety flaws.
+Security API's:
+  Java class libraries provide several API that leads to security. 
+  These APIs contain cryptographic algorithms and authentication protocols that lead to secure communication.
+Byte Code:
+  Every time when a user compiles the Java program, the Java compiler creates a class file with Bytecode, which are tested by the JVM at the time of program execution for viruses and other malicious files.
+Security Manager
+  The security manager is responsible for checking the permissions and properties of the classes. 
+  It monitors the system resources accessed by the authorized classes. It also controls socket connections.
+No Concept of Pointers
+  Java does not provide support for pointers concept. 
+  It is the main security features of Java. The use of pointers may lead to unauthorized read or write operations. 
+  Therefore, the user cannot point to any memory locations.
+
+Memory management:
+  Java automatically manages memory which is known as garbage collection. 
+  The JVM manages memory itself. The programmers are free from memory management. Hence, there is no chance to fault in memory management.
+Compile-time checking:
+  Compile-time checking also makes the Java secure. 
+  Consider a scenario in which an unauthorized method is trying to access the private variable, in this case, the JVM gives the compile-time error. 
+  It prevents the system from the crash.
+Cryptographic Security:
+  Java provides a class named java.secrurity.SourceCode that also provides security. 
+  If we get code from other sources, we should check from where the code is coming. 
+  The class maintains the source information and provides guarantees to keep a digital signature and cryptographic security.
+Java Sandbox
+  Java Sandbox is a major component of security consideration. It is a restricted area where applets are run. 
+  Java does not provide system resources without check if an applet is to be run.
+Exception Handling
+  The exception handling feature adds more security in Java. 
+  The feature reports the error to the programmer during the runtime. 
+  The code will not run until the programmer will not rectify it.
+Java ClassLoader
+  There are a number of class loaders present in JVM. 
+  It provides and maintains namespaces for specific classes. 
+  The advantage of the ClassLoader is that the untrusted classes would not behave like a trusted one.
