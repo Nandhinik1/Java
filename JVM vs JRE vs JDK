@@ -1,0 +1,10 @@
+Difference between JDK, JRE and JVM
+
+JDK is a super set of JRE which contains the JRE along with compiler , hence it can be used for development purposes.
+JRE contains JVM and other run time libraries required to execute the program.
+  It does not contain other development tools like compiler,debugger etc.
+  Hence we can install JRE only to run the Java applications not to develop them.
+JVM cannot be installed as it does not have any physical existence.
+  It comes with JRE and JDK installation.
+  It provides platform independence by converting the bytecode obtained from any machine into corresponding machine instructions,
+    but it is created only when we execute the java program.
