@@ -1,0 +1,3 @@
+In the case of POP, the program is divided into small parts based on the functions. On the other hand, in OOP, the program is divided into objects, which are instances of classes.
+In procedure-oriented programming, functions are the highest priority, and data is the lowest priority. Whereas in object-oriented programming, the data is a critical element. 
+The procedure-oriented approach is less secure in comparison to the object-oriented approach. In OOP, due to abstraction data hiding is possible, which makes it more secure.
