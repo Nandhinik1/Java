@@ -1,0 +1,12 @@
+package com.my.core.services;
+
+import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.core.servicelayer.data.SearchPageData;
+
+import java.util.Collection;
+
+public interface AlgoliaService {
+    void indexProducts(Collection<ProductModel> products);
+    SearchPageData<ProductData> searchProducts(String query, int page, int hitsPerPage);
+}
