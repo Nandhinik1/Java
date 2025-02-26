@@ -40,7 +40,7 @@ public class AlgoliaServiceImpl implements AlgoliaService {
     @Override
     public void indexProducts(Collection<ProductModel> products)
     {
-        client = new SearchClient("FDIT8RSYZF", "fad6a44afe727ba688027228ff7e5ceb");
+        client = new SearchClient("*********", "*********************");
         String indexName = "products_dev";
         try
         {
