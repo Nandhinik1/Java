@@ -1,0 +1,22 @@
+CURL:
+curl -X 'GET' \
+  'https://localhost:9002/occ/v2/my/search/algoliaSearch?hitsPerPage=2&page=0&query=product' \
+  -H 'accept: application/json'
+
+Response:
+{
+  "currentPage": 0,
+  "products": [
+    {
+      "code": "newproduct",
+      "description": "<p>new product in exclusive price</p>",
+      "name": "new updated product"
+    },
+    {
+      "code": "p2",
+      "description": "Second Product",
+      "name": "Product2222"
+    }
+  ],
+  "totalPageCount": 6
+}
