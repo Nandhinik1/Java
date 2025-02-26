@@ -1,0 +1,148 @@
+package com.my.core.services.impl;
+
+import com.algolia.api.SearchClient;
+import com.algolia.config.ClientOptions;
+import com.algolia.config.HttpRequest;
+import com.algolia.config.RequestOptions;
+import com.algolia.config.Requester;
+import com.algolia.model.search.Hit;
+import com.algolia.model.search.SearchParams;
+import com.algolia.model.search.SearchParamsObject;
+import com.algolia.model.search.SearchResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.core.services.AlgoliaService;
+import de.hybris.platform.commercefacades.product.data.ProductData;
+import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.core.servicelayer.data.PaginationData;
+import de.hybris.platform.core.servicelayer.data.SearchPageData;
+import de.hybris.platform.product.ProductService;
+//import de.hybris.platform.servicelayer.dto.converter.Converter;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+public class AlgoliaServiceImpl implements AlgoliaService {
+    private static final Logger LOG = Logger.getLogger(AlgoliaServiceImpl.class);
+
+    private SearchClient client;
+
+    @Autowired
+    protected ProductService productService;
+
+    @Override
+    public void indexProducts(Collection<ProductModel> products)
+    {
+        client = new SearchClient("FDIT8RSYZF", "fad6a44afe727ba688027228ff7e5ceb");
+        String indexName = "products_dev";
+        try
+        {
+            List<ProductData> productObjects = products.stream()
+                    .map(product -> {
+                        ProductData productData = new ProductData();
+                        productData.setName(product.getName());
+                        productData.setDescription(product.getDescription());
+                        productData.setCode(product.getCode());
+                        productData.setObjectID(product.getCode());
+                        return productData;
+                    })
+                    .collect(Collectors.toList());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(productObjects.get(0));
+//            Boolean createifNotExist = true;
+//            client.partialUpdateObjects(indexName, productObjects, createifNotExist);
+            client.saveObjects(indexName, productObjects);
+            LOG.info("Indexed products to Algolia successfully!");
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error indexing products to Algolia", e);
+        }
+    }
+
+    @Override
+    public SearchPageData<ProductData> searchProducts(String query, int page, int hitsPerPage) {
+        try
+        {
+            client = new SearchClient("FDIT8RSYZF", "fad6a44afe727ba688027228ff7e5ceb");
+
+            SearchParams param = new SearchParamsObject()
+                    .setQuery(query)
+                    .setPage(page)
+                    .setHitsPerPage(hitsPerPage);
+
+            SearchResponse<Hit> products = client.searchSingleIndex("products_dev", param, Hit.class);
+            LOG.info(String.format("products :: %s and hits :: %s",products, products.getHits()));
+            List<ProductData> productDataList = products.getHits().stream()
+                    .map(hit -> convertHitToProductData(hit))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            long totalHits = products.getNbHits();  // Total hits count from Algolia
+
+            // Calculate total pages
+            long totalPages = (totalHits + hitsPerPage - 1) / hitsPerPage;
+
+            // Create and return SearchPageData
+            return createSearchPageData(productDataList, page, hitsPerPage, totalHits, totalPages);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error searching in Algolia", e);
+        }
+        return null;
+    }
+
+    /**
+     * Create a SearchPageData instance for the paginated result
+     * @param productDataList The list of ProductData
+     * @param page The current page (0-based)
+     * @param hitsPerPage Number of hits per page
+     * @param totalHits Total number of hits (for pagination)
+     * @param totalPages Total number of pages (for pagination)
+     * @return SearchPageData containing the paginated results
+     */
+    private SearchPageData<ProductData> createSearchPageData(
+            List<ProductData> productDataList, int page, int hitsPerPage, long totalHits, long totalPages) {
+
+        SearchPageData<ProductData> pageData = new SearchPageData<>();
+        pageData.setResults(productDataList);
+
+        PaginationData paginationData = new PaginationData();
+        paginationData.setCurrentPage(page);
+        paginationData.setPageSize(hitsPerPage);
+        paginationData.setNumberOfPages((int)totalPages);
+        pageData.setPagination(paginationData);
+        return pageData;
+    }
+
+    /**
+     * Convert Algolia hit to ProductData
+     * @param hit Algolia hit object
+     * @return ProductData object
+     */
+    private ProductData convertHitToProductData(Hit hit) {
+        Map<String, Object> additionalProperties = hit.getAdditionalProperties();// Adjust this based on the attribute name in your Algolia index
+//        try {
+//            ProductModel productModel = productService.getProductForCode(productCode);
+//            if (Objects.nonNull(productModel))
+//                return productDataConverter.convert(productModel);
+//        }catch(Exception e){
+//            LOG.info("product not found :: %s"+productCode);
+//        }
+
+        ProductData productData = new ProductData();
+        productData.setCode((String)additionalProperties.get("code"));
+        productData.setDescription((String)additionalProperties.get("description"));
+        productData.setName((String)additionalProperties.get("name"));
+        return productData;
+    }
+}
