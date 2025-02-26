@@ -1,0 +1,24 @@
+Save Token:
+CURL:
+curl -X 'POST' \
+  'https://localhost:9002/occ/v2/my/pushNotification/saveToken?deviceToken=123456&userid=nandhinik%40gmail.com' \
+  -H 'accept: application/json' \
+  -d ''
+
+Response:
+can't parse JSON.  Raw result:
+
+Device token :: 123456 successfully saved for the user :: nandhinik@gmail.com 
+
+
+SendNotification:
+CURL:
+curl -X 'POST' \
+  'https://localhost:9002/occ/v2/my/pushNotification/sendNotification?notificationBody=your%20order%20is%20on%20the%20way&notificationTitle=Thanks%20for%20the%20order%2C&userid=nandhinik%40gmail.com' \
+  -H 'accept: application/json' \
+  -d ''
+
+Response:
+can't parse JSON.  Raw result:
+
+Push notification sent successfully to the user nandhinik@gmail.com
