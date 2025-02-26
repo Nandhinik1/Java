@@ -60,11 +60,11 @@ public class FirebaseContoller {
         }
     }
 
-    @RequestMapping(value = "/saveToken", method = RequestMethod.POST)
-    @Operation(operationId = "To save device token in the user", summary = "To save device token in the user")
+    @RequestMapping(value = "/sendNotification", method = RequestMethod.POST)
+    @Operation(operationId = "Send notification to the user", summary = "Send notification to the user")
     @ResponseBody
     @ApiBaseSiteIdParam
-    public ResponseEntity<String> sendNotification(@RequestParam(name = "deviceToken", required = true) String notificationtitle,@RequestParam(name = "deviceToken", required = true) String notificationbody, @RequestParam(name = "userid", required = true) String userid) throws Exception
+    public ResponseEntity<String> sendNotification(@RequestParam(name = "notificationTitle", required = true) String notificationTitle,@RequestParam(name = "notificationBody", required = true) String notificationBody, @RequestParam(name = "userid", required = true) String userid) throws Exception
     {
         String response = StringUtils.EMPTY;
         if(StringUtils.isEmpty(userid)){
@@ -74,7 +74,7 @@ public class FirebaseContoller {
 
         FirebaseApp firebaseApp = firebasePushNotificationService.initializeFirebaseApp("firebaseApp", "SecurityCredential.json");
         if (Objects.nonNull(user) && Objects.nonNull(firebaseApp)) {
-            firebasePushNotificationService.sendNotification(user.getDeviceToken(), notificationtitle, notificationbody, null, user, firebaseApp);
+            firebasePushNotificationService.sendNotification(user.getDeviceToken(), notificationBody, notificationBody, null, user, firebaseApp);
         }
         if(StringUtils.isNotEmpty(response)){
             return new ResponseEntity<>(String.format("Push notification sent successfully to the user ", userid), HttpStatus.OK);
