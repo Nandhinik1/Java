@@ -52,3 +52,5 @@ On-Premise Control: If you need full control over your search infrastructure, su
 Custom Search Features: Solr can be more flexible in implementing custom features and configurations if your search requirements are highly specific and complex.
 Conclusion:
 If you are looking for a solution that offers ease of use, speed, scalability, and a fully managed service, Algolia is often the better choice over Solr in a Hybris implementation. It is especially beneficial for teams that want to quickly implement and scale search features without managing complex infrastructure. However, if you need more customization or prefer to manage your own infrastructure, Solr may still be a suitable choice.
+
+https://www.algolia.com/doc/libraries/java/v4/methods/search/browse/?client=java
