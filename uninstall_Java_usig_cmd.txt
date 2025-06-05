@@ -1,0 +1,13 @@
+Uninstall java using cmd on windows:
+
+Open Command Prompt as Administrator.
+Run this command to list all installed JDKs:
+1. cmd:
+wmic product where "Name like '%%Java%%'" get Name, Version
+Look for something like:
+nginx
+Java SE Development Kit 21        21.0.1
+Java SE Development Kit 17        17.0.2
+
+2. Now uninstall JDK 21 by running below cmd:
+wmic product where "Name='Java SE Development Kit 21'" call uninstall
