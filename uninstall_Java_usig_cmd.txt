@@ -1,5 +1,8 @@
 Uninstall java using cmd on windows:
 
+Step1: 
+Set the java to other version jdk17 in the environmental variables path: 
+Step2:
 Open Command Prompt as Administrator.
 Run this command to list all installed JDKs:
 1. cmd:
